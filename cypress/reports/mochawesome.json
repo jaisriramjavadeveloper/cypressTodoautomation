@@ -1,0 +1,105 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 1,
+    "passes": 1,
+    "pending": 0,
+    "failures": 0,
+    "start": "2024-10-02T17:41:31.415Z",
+    "end": "2024-10-02T17:41:36.124Z",
+    "duration": 4709,
+    "testsRegistered": 1,
+    "passPercent": 100,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "9ad4cde6-8e7c-48d2-8895-d51ec740a2d2",
+      "title": "",
+      "fullFile": "cypress\\e2e\\spec_todo.cy.js",
+      "file": "cypress\\e2e\\spec_todo.cy.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "b928d307-678d-4706-bea9-a0bbffe6fdb3",
+          "title": "TodoMVC App Test",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Should add five items, mark two and four as completed, remove only item three, and clear completed",
+              "fullTitle": "TodoMVC App Test Should add five items, mark two and four as completed, remove only item three, and clear completed",
+              "timedOut": null,
+              "duration": 2327,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "const todos = ['one', 'two', 'three', 'four', 'five'];\n// Add items one, two, three, four, five\ntodos.forEach(todo => {\n  cy.get('.new-todo').type(`${todo}{enter}`);\n});\n// Small delay to ensure elements are rendered\ncy.wait(500);\n// Log the current order of the list items to debug the issue\ncy.get('.todo-list li').each(($el, index) => {\n  cy.log(`Item ${index + 1}: ${$el.text().trim()}`);\n});\n// Check the reverse order, assuming the items are rendered last-first\ncy.get('.todo-list li').eq(4).invoke('text').then(text => {\n  expect(text.trim()).to.equal('one');\n});\ncy.get('.todo-list li').eq(3).invoke('text').then(text => {\n  expect(text.trim()).to.equal('two');\n});\ncy.get('.todo-list li').eq(2).invoke('text').then(text => {\n  expect(text.trim()).to.equal('three');\n});\ncy.get('.todo-list li').eq(1).invoke('text').then(text => {\n  expect(text.trim()).to.equal('four');\n});\ncy.get('.todo-list li').eq(0).invoke('text').then(text => {\n  expect(text.trim()).to.equal('five');\n});\n// Mark the second and fourth items as completed (selected)\ncy.get('.todo-list li').eq(3).find('.toggle').click(); // Mark \"two\" as completed\ncy.get('.todo-list li').eq(1).find('.toggle').click(); // Mark \"four\" as completed\n// Verify that two and four are marked as completed\ncy.get('.todo-list li').eq(3).should('have.class', 'completed');\ncy.get('.todo-list li').eq(1).should('have.class', 'completed');\n// Remove \"item three\"\ncy.get('.todo-list li').eq(2).find('.destroy').invoke('show').click();\n// Log to check the current list after removing \"three\"\ncy.log('Items after removing three:');\ncy.get('.todo-list li').each(($el, index) => {\n  cy.log(`Item ${index + 1}: ${$el.text().trim()}`);\n});\n// Confirm that \"item three\" is removed and only 4 items remain\ncy.get('.todo-list li').should('have.length', 4);\n// Check that the remaining items are: one, two, four, five\ncy.get('.todo-list li').eq(3).invoke('text').then(text => {\n  expect(text.trim()).to.equal('one');\n});\ncy.get('.todo-list li').eq(2).invoke('text').then(text => {\n  expect(text.trim()).to.equal('two');\n});\ncy.get('.todo-list li').eq(1).invoke('text').then(text => {\n  expect(text.trim()).to.equal('four');\n});\ncy.get('.todo-list li').eq(0).invoke('text').then(text => {\n  expect(text.trim()).to.equal('five');\n});\n// Continue with filter tests and clear completed tasks",
+              "err": {},
+              "uuid": "c26fa060-ff0b-42fc-9c94-fcbeb6d8c85d",
+              "parentUUID": "b928d307-678d-4706-bea9-a0bbffe6fdb3",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "c26fa060-ff0b-42fc-9c94-fcbeb6d8c85d"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 2327,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.0.1"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": true,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.3"
+    },
+    "marge": {
+      "options": {
+        "reportDir": "cypress/reports",
+        "overwrite": false,
+        "html": true,
+        "json": true
+      },
+      "version": "6.2.0"
+    }
+  }
+}
